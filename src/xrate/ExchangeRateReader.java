@@ -1,9 +1,12 @@
 package xrate;
 
+import java.io.IOException;
+
+
 /**
  * Provide access to basic currency exchange rate services.
- * 
- * @author PUT YOUR TEAM NAME HERE
+ *
+ * @author carboxylic acid
  */
 public class ExchangeRateReader {
 
@@ -14,18 +17,19 @@ public class ExchangeRateReader {
      * for specific days will be constructed from that URL by appending the
      * year, month, and day; the URL for 25 June 2010, for example, would be
      * http://api.finance.xaviermedia.com/api/2010/06/25.xml
-     * 
+     *
      * @param baseURL
      *            the base URL for requests
+     * @throws IOException
      */
-    public ExchangeRateReader(String baseURL) {
-        // TODO Your code here
+    public ExchangeRateReader(String baseURL) throws IOException {
+      this.baseURL = baseURL;
     }
 
     /**
      * Get the exchange rate for the specified currency against the base
      * currency (the Euro) on the specified date.
-     * 
+     *
      * @param currencyCode
      *            the currency code for the desired currency
      * @param year
@@ -47,7 +51,7 @@ public class ExchangeRateReader {
     /**
      * Get the exchange rate of the first specified currency against the second
      * on the specified date.
-     * 
+     *
      * @param currencyCode
      *            the currency code for the desired currency
      * @param year
