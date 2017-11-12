@@ -59,8 +59,8 @@ public class ExchangeRateReader {
 
       //Start an connection
       String URLaddress = buildURLString(year, month, day);
-      URL Address = new URL(URLaddress);
-      InputStream parsStrem = Address.openStream();
+      URL url = new URL(urlsting);
+      InputStream parsStrem = url.openStream();
       Document parsDoc = createXMLDocument(parsStrem);
       NodeList exchangeRates = getExchangeRateList(xmlDoc);
       float rate = getExchangeRate(exchangeRates, currencyCode);
@@ -86,10 +86,21 @@ public class ExchangeRateReader {
      * @throws ParserConfigurationException
      * @throws SAXException
      */
-    public float getExchangeRate(
-            String fromCurrency, String toCurrency,
-            int year, int month, int day) {
-        // TODO Your code here
-        throw new UnsupportedOperationException();
+    public float getExchangeRate(String fromCurrency, String toCurrency,
+      int year, int month, int day) throws IOException, ParserConfigurationException,
+      SAXException {
+        //New connection that has the full path name to the xml file that needs to be pars
+        String URLaddress = buildURLString(year, month, day);
+        URL url = new URL(urlsting);
+        InputStream parsStrem = url.openStream();
+        //Generates an xml Document
+        Document parsDoc = createXMLDocument(parsStrem);
+        // Creates a list of exchange nodes for currency
+        NodeList exchangeRates = getExchangeRateList(parsDoc);
+        float rateCCurrency = getExchangeRate(exchangeRates, rateCCurrency);
+        float pushCurrencyRate = getExchangeRate(exchangeRates, pushCurrencyRate);
+        float rate = rateCCurrency / pushCurrencyRate;
+        parsStrem.close();
+        return rate;
     }
 }
