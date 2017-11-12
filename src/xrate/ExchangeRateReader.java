@@ -1,6 +1,17 @@
 package xrate;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -43,9 +54,19 @@ public class ExchangeRateReader {
      * @throws ParserConfigurationException
      * @throws SAXException
      */
-    public float getExchangeRate(String currencyCode, int year, int month, int day) {
-        // TODO Your code here
-        throw new UnsupportedOperationException();
+    public float getExchangeRate(String currencyCode, int year, int month, int day)
+    throws ParserConfigurationException, SAXException, IOException{
+
+      //Start an connection
+      String URLaddress = buildURLString(year, month, day);
+      URL Address = new URL(URLaddress);
+      InputStream parsStrem = Address.openStream();
+      Document parsDoc = createXMLDocument(parsStrem);
+      NodeList exchangeRates = getExchangeRateList(xmlDoc);
+      float rate = getExchangeRate(exchangeRates, currencyCode);
+
+      parsStrem.close();
+      return rate;
     }
 
     /**
